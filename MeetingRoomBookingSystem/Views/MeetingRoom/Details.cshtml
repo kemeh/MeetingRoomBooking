@@ -1,0 +1,22 @@
+﻿@model MeetingRoomBookingSystem.Models.MeetingRoom
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <div class="row">
+            <div class="col-sm-6">
+                <article>
+                    <header>
+                        <h2>
+                            @Html.ActionLink(@Model.Name, "Details", "Office", new { @id = Model.Id }, null)
+                        </h2>
+                    </header>
+                    <div>@Model.Capacity</div>
+                    <div>@Model.Office.Name</div>
+                </article>
+            </div>
+    </div>
+</div>
+<hr />

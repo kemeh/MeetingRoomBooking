@@ -1,0 +1,25 @@
+﻿@model List<MeetingRoomBookingSystem.Models.Office>
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var office in Model)
+        {
+            <div class="col-sm-6">
+                <article>
+                    <header>
+                        <h2>
+                            @Html.ActionLink(@office.Name, "Details", "Office", new { @id = office.Id }, null)
+                        </h2>
+                    </header>
+                    <div>@office.Address</div>
+                    <div>@office.PhoneNumber</div>
+                    <div>@office.IsActive</div>
+                </article>
+            </div>
+        }
+    </div>
+</div>
+<hr />

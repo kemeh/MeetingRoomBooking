@@ -1,0 +1,67 @@
+﻿@model MeetingRoomBookingSystem.Models.MeetingRoomViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<<div class="container">
+    <div class="well">
+        <h2>Create Meeting Room</h2>
+        @using (Html.BeginForm("Create", "MeetingRoom", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Capacity, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Capacity, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.OfficeId, new { @class = "col-sm-4 control-label" })
+                <div class="dropdown col-sm-4">
+                    @Html.DropDownListFor(m => m.OfficeId,
+                    new SelectList(Model.Offices, "Id", "Name"),
+                    new { @class = "btn btn-info col-sm-12" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.HasWorkstations, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(m => m.HasWorkstations)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.HasMultimedia, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(m => m.HasMultimedia)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.HasWhiteboard, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(m => m.HasWhiteboard)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    @Html.ActionLink("Cancel", "Index", "Office", null, new { @class = "btn btn-default" })
+                    <input type="submit" value="Edit" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

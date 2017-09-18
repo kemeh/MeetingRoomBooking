@@ -1,0 +1,63 @@
+﻿@model MeetingRoomBookingSystem.Models.ReservationViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container">
+    <div class="well">
+        <h2>Create New Reservation</h2>
+        @using (Html.BeginForm("Create", "Reservation", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.StartDate, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.StartDate, new { type = "DateTimePicker" })
+                </div>
+            </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="datetimepicker12"></div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker12').datetimepicker({
+                inline: true,
+                sideBySide: true
+            });
+        });
+                </script>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.EndDate, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.EndDate, new { type = "date" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.MeetingRoomId, new { @class = "col-sm-4 control-label" })
+                <div class="dropdown col-sm-4">
+                    @Html.DropDownListFor(m => m.MeetingRoomId,
+                    new SelectList(Model.MeetingRooms, "Id", "Name"),
+                    new { @class = "btn btn-info col-sm-12" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    @Html.ActionLink("Cancel", "Index", "Office", null, new { @class = "btn btn-default" })
+                    <input type="submit" value="Create" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
