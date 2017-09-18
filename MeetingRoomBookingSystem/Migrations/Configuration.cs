@@ -1,13 +1,13 @@
 using MeetingRoomBookingSystem.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
 
 namespace MeetingRoomBookingSystem.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+    
 
     internal sealed class Configuration : DbMigrationsConfiguration<MeetingRoomBookingSystem.Models.MeetingRoomBookingSystemDbContext>
     {
