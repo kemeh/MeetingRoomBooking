@@ -14,6 +14,7 @@ namespace MeetingRoomBookingSystem.Controllers
     public class OfficeController : Controller
     {
         // GET: Office
+        [Authorize]
         public ActionResult Index()
         {
             using (var database = new MeetingRoomBookingSystemDbContext())

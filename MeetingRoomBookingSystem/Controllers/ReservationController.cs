@@ -38,18 +38,27 @@ namespace MeetingRoomBookingSystem.Controllers
         [HttpPost]
         public ActionResult Create(ReservationViewModel model)
         {
-
             using (var database = new MeetingRoomBookingSystemDbContext())
             {
                 if (ModelState.IsValid)
                 {
+                    var reservations = database
+                        .Reservations
+                        .Where(r => r.MeetingRoomId == model.MeetingRoomId)
+                        .Where(r => r.StartDate < model.StartDate && model.StartDate < r.EndDate)
+                        .ToList();
+                    //TO DO
+                        //if(reservations
+                        //&& r.StartDate.Hour >= model.StartDate.Hour
+                        //&& r.StartDate.Minute >)
+
                     var userId = database
                         .Users
                         .Where(u => u.UserName == this.User.Identity.Name)
                         .First()
                         .Id;
 
-                    var reservation = new Reservation(userId, model.MeetingRoomId, model.StartDate, model.EndDate);
+                    var reservation = new Reservation(userId, model.MeetingRoomId, model.StartDate, model.EndDate, model.Description);
 
                     database.Reservations.Add(reservation);
                     database.SaveChanges();

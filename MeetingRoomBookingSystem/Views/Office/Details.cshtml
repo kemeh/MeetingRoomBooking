@@ -19,7 +19,8 @@
             <footer>
                 @if (User.IsInRole("Admin"))
                 {
-                    @Html.ActionLink("Edit", "Edit", "Office", new { @id = Model.Id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Edit Office", "Edit", "Office", new { @id = Model.Id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Create Meeting Room", "Create", "MeetingRoom", null, new { @class = "btn btn-success" })
                 }               
             </footer>
         </div>

@@ -13,6 +13,8 @@ namespace MeetingRoomBookingSystem.Models
 
         public DateTime EndDate { get; set; }
 
+        public string Description { get; set; }
+
         public int MeetingRoomId { get; set; }
 
         public ICollection<MeetingRoom> MeetingRooms { get; set; }
