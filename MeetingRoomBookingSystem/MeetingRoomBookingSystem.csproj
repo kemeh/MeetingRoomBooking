@@ -192,6 +192,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Dpc.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeetingRoom.cs" />
     <Compile Include="Models\MeetingRoomBookingSystemDbContext.cs" />
@@ -204,6 +205,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -279,6 +282,7 @@
     <Content Include="Views\MeetingRoom\Edit.cshtml" />
     <Content Include="Views\Reservation\Create.cshtml" />
     <Content Include="Views\Reservation\Details.cshtml" />
+    <Content Include="Views\Reservation\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

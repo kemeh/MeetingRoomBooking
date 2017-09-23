@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using MeetingRoomBookingSystem.Models;
 
 namespace MeetingRoomBookingSystem.Controllers
@@ -15,6 +17,71 @@ namespace MeetingRoomBookingSystem.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        //GET: Reservation/Edit
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var databse = new MeetingRoomBookingSystemDbContext())
+            {
+                var reservation = databse
+                    .Reservations
+                    .Where(r => r.Id == id)
+                    .First();
+
+                if (reservation == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var model = new ReservationViewModel
+                {
+                    Id = reservation.Id,
+                    Description = reservation.Description,
+                    StartDate = reservation.StartDate,
+                    EndDate = reservation.EndDate,
+                    MeetingRoom = reservation.MeetingRoom,
+                    MeetingRoomId = reservation.MeetingRoomId,
+                    MeetingRooms = databse
+                    .MeetingRooms
+                    .OrderBy(m => m.Name)
+                    .ToList()
+                };
+
+                return View(model);
+            }
+        }
+
+        //POST: Reservation/Edit
+        [HttpPost]
+        public ActionResult Edit(ReservationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var database = new MeetingRoomBookingSystemDbContext())
+                {
+                    var reservation = database
+                        .Reservations
+                        .Where(r => r.Id == model.Id)
+                        .First();
+
+                    reservation.Description = model.Description;
+                    reservation.StartDate = model.StartDate;
+                    reservation.EndDate = model.EndDate;
+
+                    database.Entry(reservation).State = EntityState.Modified;
+                    database.SaveChanges();
+
+                    return Content("<script type='text/javascript'>window.close();</script>");
+                }
+            }
+
+            return View(model);
         }
 
         //GET: Reservation/Create

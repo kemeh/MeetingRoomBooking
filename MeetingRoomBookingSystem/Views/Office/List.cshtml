@@ -5,13 +5,18 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-sm-2">
+            @Html.ActionLink("Create New Office", "Create", "Office", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+    <div class="row">       
         @foreach (var office in Model)
         {
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <article>
                     <header>
                         <h2>
-                            @Html.ActionLink(@office.Name, "Details", "Office", new { @id = office.Id }, null)
+                            @Html.ActionLink(@office.Name, "Details", "Office", new {@id = office.Id}, null)
                         </h2>
                     </header>
                     <div>@office.Address</div>
@@ -20,6 +25,8 @@
                 </article>
             </div>
         }
+
+
     </div>
 </div>
 <hr />
