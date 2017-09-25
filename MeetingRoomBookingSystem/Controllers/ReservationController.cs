@@ -27,6 +27,8 @@ namespace MeetingRoomBookingSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            
+
             using (var databse = new MeetingRoomBookingSystemDbContext())
             {
                 var reservation = databse
@@ -34,26 +36,22 @@ namespace MeetingRoomBookingSystem.Controllers
                     .Where(r => r.Id == id)
                     .First();
 
-                if (reservation == null)
+                if (this.IsUserAuthorizedToEdit(reservation))
                 {
-                    return HttpNotFound();
+                    if (reservation == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    var model = new ReservationViewModel
+                    {
+                        Id = reservation.Id,
+                        Description = reservation.Description,
+                    };
+                    return PartialView(model);
                 }
 
-                var model = new ReservationViewModel
-                {
-                    Id = reservation.Id,
-                    Description = reservation.Description,
-                    StartDate = reservation.StartDate,
-                    EndDate = reservation.EndDate,
-                    MeetingRoom = reservation.MeetingRoom,
-                    MeetingRoomId = reservation.MeetingRoomId,
-                    MeetingRooms = databse
-                    .MeetingRooms
-                    .OrderBy(m => m.Name)
-                    .ToList()
-                };
-
-                return View(model);
+                return null;
             }
         }
 
@@ -71,8 +69,6 @@ namespace MeetingRoomBookingSystem.Controllers
                         .First();
 
                     reservation.Description = model.Description;
-                    reservation.StartDate = model.StartDate;
-                    reservation.EndDate = model.EndDate;
 
                     database.Entry(reservation).State = EntityState.Modified;
                     database.SaveChanges();

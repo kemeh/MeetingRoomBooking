@@ -49,31 +49,33 @@ namespace MeetingRoomBookingSystem.Models
                 .Reservations
                 .Where(r => r.Id == reservationId)
                 .First();
+            if (toBeResized.IsAuthor(HttpContext.Current.User.Identity.Name))
+            {
+                var oldStart = toBeResized.StartDate;
+                var oldEnd = toBeResized.EndDate;
 
-            var oldStart = toBeResized.StartDate;
-            var oldEnd = toBeResized.EndDate;
+                toBeResized.StartDate = e.NewStart;
+                toBeResized.EndDate = e.NewEnd;
 
-            toBeResized.StartDate = e.NewStart;
-            toBeResized.EndDate = e.NewEnd;
-
-            var reservations = database
+                var reservations = database
                     .Reservations
                     .Where(r => r.MeetingRoomId == meetingRoomId)
                     .Where(r => r.StartDate < toBeResized.EndDate && toBeResized.StartDate < r.EndDate)
                     .ToList();
 
-            if (reservations.Any())
-            {
-                if ((reservations.Count == 1 && reservations.First().Id != toBeResized.Id) || reservations.Count > 1)
+                if (reservations.Any())
                 {
-                    toBeResized.StartDate = oldStart;
-                    toBeResized.EndDate = oldEnd;
+                    if ((reservations.Count == 1 && reservations.First().Id != toBeResized.Id) || reservations.Count > 1)
+                    {
+                        toBeResized.StartDate = oldStart;
+                        toBeResized.EndDate = oldEnd;
+                    }
                 }
-            }
-            else
-            {
-                database.Entry(toBeResized).State = EntityState.Modified;
-                database.SaveChanges();
+                else
+                {
+                    database.Entry(toBeResized).State = EntityState.Modified;
+                    database.SaveChanges();
+                }
             }
             Update();
         }
@@ -87,31 +89,36 @@ namespace MeetingRoomBookingSystem.Models
                 .Where(r => r.Id == reservationId)
                 .First();
 
-            var oldStart = toBeResized.StartDate;
-            var oldEnd = toBeResized.EndDate;
-
-            toBeResized.StartDate = e.NewStart;
-            toBeResized.EndDate = e.NewEnd;
-
-            var reservations = database
-                    .Reservations
-                    .Where(r => r.MeetingRoomId == meetingRoomId)
-                    .Where(r => r.StartDate < toBeResized.EndDate && toBeResized.StartDate < r.EndDate)
-                    .ToList();
-
-            if (reservations.Any())
+            if (toBeResized.IsAuthor(HttpContext.Current.User.Identity.Name))
             {
-                if ((reservations.Count == 1 && reservations.First().Id != toBeResized.Id) || reservations.Count > 1)
+                var oldStart = toBeResized.StartDate;
+                var oldEnd = toBeResized.EndDate;
+
+                toBeResized.StartDate = e.NewStart;
+                toBeResized.EndDate = e.NewEnd;
+
+                var reservations = database
+                        .Reservations
+                        .Where(r => r.MeetingRoomId == meetingRoomId)
+                        .Where(r => r.StartDate < toBeResized.EndDate && toBeResized.StartDate < r.EndDate)
+                        .ToList();
+
+                if (reservations.Any())
                 {
-                    toBeResized.StartDate = oldStart;
-                    toBeResized.EndDate = oldEnd;
+                    if ((reservations.Count == 1 && reservations.First().Id != toBeResized.Id) || reservations.Count > 1)
+                    {
+                        toBeResized.StartDate = oldStart;
+                        toBeResized.EndDate = oldEnd;
+                    }
+                }
+                else
+                {
+                    database.Entry(toBeResized).State = EntityState.Modified;
+                    database.SaveChanges();
                 }
             }
-            else
-            {
-                database.Entry(toBeResized).State = EntityState.Modified;
-                database.SaveChanges();
-            }
+
+            
             Update();
         }
 
@@ -142,6 +149,17 @@ namespace MeetingRoomBookingSystem.Models
 
             Update();
         }
+
+        protected override void OnCommand(CommandArgs e)
+        {
+            switch (e.Command)
+            {
+                case "refresh":
+                    Update();
+                    break;
+            }
+        }
+
 
         protected override void OnFinish()
         {

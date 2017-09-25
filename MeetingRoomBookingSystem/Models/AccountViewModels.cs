@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
@@ -90,6 +91,7 @@ namespace MeetingRoomBookingSystem.Models
 
         public virtual ICollection<Office> Offices { get; set; }
 
+        [DisplayName("Office")]
         public int OfficeId { get; set; }
 
         [Required]
@@ -108,6 +110,7 @@ namespace MeetingRoomBookingSystem.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [DisplayName("Time Zone")]
         public string JsTime { get; set; }
         public SelectListItem[] TimezoneList { get; set; }
     }
