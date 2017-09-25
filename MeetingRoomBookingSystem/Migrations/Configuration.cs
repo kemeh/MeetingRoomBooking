@@ -27,7 +27,7 @@ namespace MeetingRoomBookingSystem.Migrations
 
             if (!context.Users.Any())
             {
-                this.CreateUser(context, "First", "Second", "admin@admin.com", "123456", null);
+                this.CreateUser(context, "First", "Second", "admin@admin.com", "123456", null, TimeZoneInfo.Local.Id);
                 this.SetRoleToUser(context, "admin@admin.com", "Admin");
             }
         }
@@ -45,7 +45,7 @@ namespace MeetingRoomBookingSystem.Migrations
             }
         }
 
-        private void CreateUser(MeetingRoomBookingSystemDbContext context, string firstName, string lastName, string email, string password, int? officeId)
+        private void CreateUser(MeetingRoomBookingSystemDbContext context, string firstName, string lastName, string email, string password, int? officeId, string timeZone)
         {
             // Create User Manager
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
@@ -68,7 +68,8 @@ namespace MeetingRoomBookingSystem.Migrations
                 LastName = lastName,
                 IsActive = true,
                 Email = email,
-                OfficeId = null
+                OfficeId = null,
+                TimeZone = timeZone
             };
 
             //Create user

@@ -149,11 +149,25 @@ namespace MeetingRoomBookingSystem.Models
             {
                 return;
             }
+            var user = this.database
+                .Users
+                .Where(u => u.Id == userId)
+                .First();
 
-            Events = database
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(user.TimeZone);
+
+            var reservations = database
                 .Reservations
                 .Where(r => r.MeetingRoomId == meetingRoomId)
                 .ToList();
+
+            foreach (var reservation in reservations)
+            {
+                reservation.StartDate = reservation.StartDate;
+                reservation.EndDate = reservation.EndDate;
+            }
+
+            Events = reservations;
 
             DataIdField = "Id";
             DataTextField = "Description";

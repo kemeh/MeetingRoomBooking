@@ -1,4 +1,5 @@
-﻿@model MeetingRoomBookingSystem.Models.RegisterViewModel
+﻿@using MeetingRoomBookingSystem.Models
+@model MeetingRoomBookingSystem.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -52,10 +53,20 @@
         @Html.LabelFor(m => m.OfficeId, new { @class = "col-md-2 control-label" })
         <div class="dropdown col-md-10">
             @Html.DropDownListFor(m => m.OfficeId,
-                    new SelectList(Model.Offices, "Id", "Name"),
-                    new { @class = "btn btn-info col-sm-12" })
+                new SelectList(Model.Offices, "Id", "Name"),
+                new { @class = "btn btn-info col-sm-12" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.JsTime, new { @class = "col-md-2 control-label" })
+        <div class="dropdown col-md-10">
+            @Html.DropDownListFor(mod => Model.JsTime, Model.TimezoneList,
+            new { @class = "form-control", title = "Timezone to display dates." })
+        </div>
+    </div>
+
+    
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

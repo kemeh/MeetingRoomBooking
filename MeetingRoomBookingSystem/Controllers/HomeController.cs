@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using DayPilot.Web.Mvc;
-using DayPilot.Web.Mvc.Enums;
-using DayPilot.Web.Mvc.Events.Calendar;
 using MeetingRoomBookingSystem.Models;
+using Microsoft.AspNet.Identity;
+
 
 namespace MeetingRoomBookingSystem.Controllers
 {
@@ -15,7 +11,10 @@ namespace MeetingRoomBookingSystem.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Office");
-        }        
+            using (var database = new MeetingRoomBookingSystemDbContext())
+            {
+                return RedirectToAction("Index", "Office");
+            }
+        }
     }
 }

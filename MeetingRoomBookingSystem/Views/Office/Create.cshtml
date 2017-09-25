@@ -1,4 +1,4 @@
-﻿@model MeetingRoomBookingSystem.Models.Office
+﻿@model MeetingRoomBookingSystem.Models.OfficeCreateModel
 @{
     ViewBag.Title = "Create";
 }
@@ -28,6 +28,14 @@
                 @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4">
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.TimeZone, new { @class = "control-label col-sm-4" })
+                <div class="dropdown col-sm-4">
+                     @Html.DropDownListFor(mod => Model.TimeZone, Model.TimezoneList,
+                    new { @class = "form-control", title = "Timezone to display dates." })
                 </div>
             </div>
 

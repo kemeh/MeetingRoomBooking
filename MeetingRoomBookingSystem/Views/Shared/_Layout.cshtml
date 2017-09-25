@@ -23,6 +23,16 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 </ul>
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Create New Office", "Create", "Office")</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Register User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    </ul>
+                }
+                
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

@@ -3,26 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MeetingRoomBookingSystem.Models
 {
-    public class Office
+    public class OfficeCreateModel
     {
-        private string _timeZone;
-
-        public Office()
+        public OfficeCreateModel()
         {
-            
-        }
-
-        public Office(string name, string address, string phoneNumber, string timeZone)
-        {
-            this.Name = name;
-            this.Address = address;
-            this.PhoneNumber = phoneNumber;
-            this.IsActive = true;
-            this.TimeZone = timeZone;
+            var tzs = TimeZoneInfo.GetSystemTimeZones();
+            TimezoneList = tzs.Select(tz => new SelectListItem()
+            {
+                Text = tz.DisplayName,
+                Value = tz.Id
+            }).ToArray();
         }
 
         [Key]
@@ -42,18 +37,7 @@ namespace MeetingRoomBookingSystem.Models
         public bool IsActive { get; set; }
 
         [DisplayName("Time Zone")]
-        public string TimeZone
-        {
-            get { return _timeZone; }
-            set
-            {
-                _timeZone = value;
-            }
-        }
-
-        public virtual ICollection<MeetingRoom> MeetingRooms { get; set; }
-
-        public virtual ICollection<ApplicationUser> Users { get; set; }
-
+        public string TimeZone { get; set; }
+        public SelectListItem[] TimezoneList { get; set; }
     }
 }

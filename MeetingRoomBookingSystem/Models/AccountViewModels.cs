@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace MeetingRoomBookingSystem.Models
 {
@@ -67,6 +70,15 @@ namespace MeetingRoomBookingSystem.Models
         //[Required]
         //[Display(Name = "User Name")]
         //public string UserName { get; set; }
+        public RegisterViewModel()
+        {
+            var tzs = TimeZoneInfo.GetSystemTimeZones();
+            TimezoneList = tzs.Select(tz => new SelectListItem()
+            {
+                Text = tz.DisplayName,
+                Value = tz.Id
+            }).ToArray();
+        }
 
         [Required]
         [Display(Name = "First Name")]
@@ -93,8 +105,11 @@ namespace MeetingRoomBookingSystem.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string JsTime { get; set; }
+        public SelectListItem[] TimezoneList { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -112,7 +127,7 @@ namespace MeetingRoomBookingSystem.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

@@ -78,7 +78,9 @@ namespace MeetingRoomBookingSystem.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            return View();
+            var model = new OfficeCreateModel();
+
+            return View(model);
         }
 
         //POST: Office/Create
@@ -90,7 +92,18 @@ namespace MeetingRoomBookingSystem.Controllers
                 using (var database = new MeetingRoomBookingSystemDbContext())
                 {
                     model.IsActive = true;
-                    database.Offices.Add(model);
+
+                    var office = new Office
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        Address = model.Address,
+                        IsActive = true,
+                        PhoneNumber = model.PhoneNumber,
+                        TimeZone = model.TimeZone
+                    };
+
+                    database.Offices.Add(office);
                     database.SaveChanges();
 
                     return RedirectToAction("Index");

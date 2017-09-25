@@ -198,6 +198,7 @@
     <Compile Include="Models\MeetingRoomBookingSystemDbContext.cs" />
     <Compile Include="Models\MeetingRoomViewModel.cs" />
     <Compile Include="Models\Office.cs" />
+    <Compile Include="Models\OfficeCreateModel.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\ReservationViewModel.cs" />
     <Compile Include="Models\Role.cs" />

@@ -136,7 +136,7 @@ namespace MeetingRoomBookingSystem.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Register()
         {
             using (var database = new MeetingRoomBookingSystemDbContext())
@@ -156,7 +156,6 @@ namespace MeetingRoomBookingSystem.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -169,7 +168,9 @@ namespace MeetingRoomBookingSystem.Controllers
                 LastName = model.LastName,
                 IsActive = true,
                 Email = model.Email,
-                OfficeId = model.OfficeId
+                OfficeId = model.OfficeId,
+                TimeZone = model.JsTime
+                
             };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
